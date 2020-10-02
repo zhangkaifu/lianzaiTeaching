@@ -8,19 +8,17 @@
 
 #### 后台
 
-![](imgs/houtai.png)
+![](https://img-blog.csdnimg.cn/20201002201155710.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjI0Mzcw,size_16,color_FFFFFF,t_70#pic_center)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201002201450782.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjI0Mzcw,size_16,color_FFFFFF,t_70#pic_center)
 
 #### 前台
 
-![](imgs/home.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201002201506357.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjI0Mzcw,size_16,color_FFFFFF,t_70#pic_center)
 
-#### 详情
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201002201633690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjI0Mzcw,size_16,color_FFFFFF,t_70#pic_center)
 
-![](imgs/play.png)
-
-![](imgs/play2.png)
-
-
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20201002201535156.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjI0Mzcw,size_16,color_FFFFFF,t_70#pic_center)
 
 ## 技术选型
 
