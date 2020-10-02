@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.course.mapper.TeachingCourseMapper">
+    
+    <resultMap type="TeachingCourse" id="TeachingCourseResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="courses"    column="courses"    />
+        <result property="chapter"    column="chapter"    />
+        <result property="section"    column="section"    />
+        <result property="teacher"    column="teacher"    />
+        <result property="synopsis"    column="synopsis"    />
+        <result property="videosUrl"    column="videosUrl"    />
+        <result property="erUrl"    column="erUrl"    />
+        <result property="imgUrl"    column="imgUrl"    />
+        <result property="label"    column="label"    />
+        <result property="craeateUser"    column="craeate_user"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectTeachingCourseVo">
+        select id, grade, courses, chapter, section, teacher, synopsis, videosUrl, erUrl, imgUrl, label, craeate_user, create_time from teaching_course
+    </sql>
+
+    <select id="selectTeachingCourseList" parameterType="TeachingCourse" resultMap="TeachingCourseResult">
+        <include refid="selectTeachingCourseVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="courses != null  and courses != ''"> and courses = #{courses}</if>
+            <if test="chapter != null  and chapter != ''"> and chapter = #{chapter}</if>
+            <if test="section != null  and section != ''"> and section = #{section}</if>
+            <if test="teacher != null  and teacher != ''"> and teacher like concat('%', #{teacher}, '%')</if>
+            <if test="synopsis != null  and synopsis != ''"> and synopsis = #{synopsis}</if>
+            <if test="videosUrl != null  and videosUrl != ''"> and videosUrl = #{videosUrl}</if>
+            <if test="erUrl != null  and erUrl != ''"> and erUrl = #{erUrl}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and imgUrl = #{imgUrl}</if>
+            <if test="label != null  and label != ''"> and label = #{label}</if>
+            <if test="craeateUser != null  and craeateUser != ''"> and craeate_user like concat('%', #{craeateUser}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectTeachingCourseById" parameterType="Long" resultMap="TeachingCourseResult">
+        <include refid="selectTeachingCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeachingCourse" parameterType="TeachingCourse" useGeneratedKeys="true" keyProperty="id">
+        insert into teaching_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grade != null and grade != ''">grade,</if>
+            <if test="courses != null">courses,</if>
+            <if test="chapter != null">chapter,</if>
+            <if test="section != null">section,</if>
+            <if test="teacher != null">teacher,</if>
+            <if test="synopsis != null">synopsis,</if>
+            <if test="videosUrl != null">videosUrl,</if>
+            <if test="erUrl != null">erUrl,</if>
+            <if test="imgUrl != null">imgUrl,</if>
+            <if test="label != null">label,</if>
+            <if test="craeateUser != null">craeate_user,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grade != null and grade != ''">#{grade},</if>
+            <if test="courses != null">#{courses},</if>
+            <if test="chapter != null">#{chapter},</if>
+            <if test="section != null">#{section},</if>
+            <if test="teacher != null">#{teacher},</if>
+            <if test="synopsis != null">#{synopsis},</if>
+            <if test="videosUrl != null">#{videosUrl},</if>
+            <if test="erUrl != null">#{erUrl},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="label != null">#{label},</if>
+            <if test="craeateUser != null">#{craeateUser},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachingCourse" parameterType="TeachingCourse">
+        update teaching_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null and grade != ''">grade = #{grade},</if>
+            <if test="courses != null">courses = #{courses},</if>
+            <if test="chapter != null">chapter = #{chapter},</if>
+            <if test="section != null">section = #{section},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="synopsis != null">synopsis = #{synopsis},</if>
+            <if test="videosUrl != null">videosUrl = #{videosUrl},</if>
+            <if test="erUrl != null">erUrl = #{erUrl},</if>
+            <if test="imgUrl != null">imgUrl = #{imgUrl},</if>
+            <if test="label != null">label = #{label},</if>
+            <if test="craeateUser != null">craeate_user = #{craeateUser},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeachingCourseById" parameterType="Long">
+        delete from teaching_course where id = #{id}
+    </delete>
+
+    <delete id="deleteTeachingCourseByIds" parameterType="String">
+        delete from teaching_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

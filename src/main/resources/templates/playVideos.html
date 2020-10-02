@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>[[${liangzaiinfo.title}]]</title>
+    <link rel="shortcut icon" th:href="${liangzaiinfo.logourl}">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div style="width: 100%">
+    <div style="background-color: #C70000;height: 90px;width: 100%">
+        <nav class="navbar navbar-default" role="navigation" >
+            <div class="container-fluid">
+                <div class="navbar-header" style="float: left;margin-left: 10px;width: 73px">
+                    <a class="navbar-brand"  href="/"><img src="../static/frontimg/Logo.png" width="60px" high="60px" th:src="${liangzaiinfo.logourl}" alt=""></a>
+                </div>
+                <div style="float: left;margin-top: 13px;margin-left:40px;color: white">
+                    <a href="/"><h1  style="color: white;font-size: medium">[[${liangzaiinfo.title}]]</h1></a>
+                </div>
+                <div style="float: right;margin-right: 10px">
+                    <a class="navbar-brand"   th:href="${liangzaiinfo.personfile}"><img src="../static/frontimg/profile.png" style="margin-top: 10px" width="50px" high="50px" alt="关于" th:src="${liangzaiinfo.personurl}"></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--<div >-->
+        <!--<img src="../static/frontimg/playbk.png" th:src="@{/frontimg/playbk.png}" width="100%" alt="">-->
+    <!--</div>-->
+    <div>
+        <div style="margin-left: 10%;margin-right: 10%;margin-top: 10px">
+            <div>
+            <video width="320" height="240" controls autoplay controlsList="nodownload" >
+                <source th:src="${info.videosUrl}" type="video/ogg">
+                <source th:src="${info.videosUrl}" type="video/mp4">
+                <source th:src="${info.videosUrl}" type="video/webm">
+                <object th:src="${info.videosUrl}" width="320" height="240">
+                    <embed width="320" height="240" th:src="${info.videosUrl}">
+                </object>
+            </video>
+            </div>
+            <div class="text-left">
+                <p>课程内容：[[${info.grade}]]  [[${info.label}]]  [[${info.chapter}]]  [[${info.section}]]  [[${info.courses}]]</p>
+                <p>授课老师：[[${info.teacher}]]</p>
+                <p>上传时间：<span th:text="${#dates.format(info.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                <p>课程简介：</p>
+                <p th:utext="${info.synopsis}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div style="width: 100%;position:fixed;z-index: 9999;bottom: 0px;left: 0px;right: 0px">
+    <div class="pull-right">© 2020 [[${liangzaiinfo.makers}]] Copyright </div>
+</div>
+<script th:inline="javascript">
+
+
+</script>
+
+</body>
+</html>

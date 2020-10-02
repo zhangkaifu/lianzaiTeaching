@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改网站信息')" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-liangzaiinfo-edit" th:object="${liangzaiinfo}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">网名：</label>
+                <div class="col-sm-8">
+                    <input name="title" th:field="*{title}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">logo：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="logourl" th:field="*{logourl}">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="logourl" name="file" type="file" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">背景图：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="bkgurl" th:field="*{bkgurl}">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="bkgurl" name="file" type="file" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">个人简历图标：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="personurl" th:field="*{personurl}">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="personurl" name="file" type="file" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">个人简历文件：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="personfile" th:field="*{personfile}">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="personfile" name="file" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">版权归属：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" th:field="*{makers}">
+                    <div class="summernote" id="makers"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <th:block th:include="include :: summernote-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/liangzaiinfo";
+        $("#form-liangzaiinfo-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-liangzaiinfo-edit').serialize());
+            }
+        }
+
+        $(".file-upload").each(function (i) {
+            var val = $("input[name='" + this.id + "']").val()
+            $(this).fileinput({
+                'uploadUrl': '/common/upload',
+                initialPreviewAsData: true,
+                initialPreview: [val],
+                maxFileCount: 1,
+                autoReplace: true
+            }).on('fileuploaded', function (event, data, previewId, index) {
+                $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+            }).on('fileremoved', function (event, id, index) {
+                $("input[name='" + event.currentTarget.id + "']").val('')
+            })
+            $(this).fileinput('_initFileActions');
+        });
+
+        $(function() {
+            $('.summernote').each(function(i) {
+                $('#' + this.id).summernote({
+                    lang: 'zh-CN',
+                    callbacks: {
+                        onChange: function(contents, $edittable) {
+                            $("input[name='" + this.id + "']").val(contents);
+                        },
+                        onImageUpload: function(files) {
+							var obj = this;
+							var data = new FormData();
+							data.append("file", files[0]);
+							$.ajax({
+								type: "post",
+								url: ctx + "common/upload",
+								data: data,
+								cache: false,
+								contentType: false,
+								processData: false,
+								dataType: 'json',
+								success: function(result) {
+									if (result.code == web_status.SUCCESS) {
+										$('#' + obj.id).summernote('insertImage', result.url);
+									} else {
+										$.modal.alertError(result.msg);
+									}
+								},
+								error: function(error) {
+									$.modal.alertWarning("图片上传失败。");
+								}
+							});
+						}
+                    }
+                });
+                var content = $("input[name='" + this.id + "']").val();
+                $('#' + this.id).summernote('code', content);
+            })
+        });
+    </script>
+</body>
+</html>

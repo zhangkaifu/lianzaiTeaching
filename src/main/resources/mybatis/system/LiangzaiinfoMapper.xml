@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.liangzaiinfo.mapper.LiangzaiinfoMapper">
+    
+    <resultMap type="Liangzaiinfo" id="LiangzaiinfoResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="logourl"    column="logourl"    />
+        <result property="bkgurl"    column="bkgurl"    />
+        <result property="personurl"    column="personurl"    />
+        <result property="personfile"    column="personfile"    />
+        <result property="makers"    column="makers"    />
+    </resultMap>
+
+    <sql id="selectLiangzaiinfoVo">
+        select id, title, logourl, bkgurl, personurl, personfile, makers from liangzaiinfo
+    </sql>
+
+    <select id="selectLiangzaiinfoList" parameterType="Liangzaiinfo" resultMap="LiangzaiinfoResult">
+        <include refid="selectLiangzaiinfoVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="logourl != null  and logourl != ''"> and logourl = #{logourl}</if>
+            <if test="bkgurl != null  and bkgurl != ''"> and bkgurl = #{bkgurl}</if>
+            <if test="personurl != null  and personurl != ''"> and personurl = #{personurl}</if>
+            <if test="personfile != null  and personfile != ''"> and personfile = #{personfile}</if>
+            <if test="makers != null  and makers != ''"> and makers = #{makers}</if>
+        </where>
+    </select>
+    
+    <select id="selectLiangzaiinfoById" parameterType="Long" resultMap="LiangzaiinfoResult">
+        <include refid="selectLiangzaiinfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLiangzaiinfo" parameterType="Liangzaiinfo">
+        insert into liangzaiinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="logourl != null">logourl,</if>
+            <if test="bkgurl != null">bkgurl,</if>
+            <if test="personurl != null">personurl,</if>
+            <if test="personfile != null">personfile,</if>
+            <if test="makers != null">makers,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="logourl != null">#{logourl},</if>
+            <if test="bkgurl != null">#{bkgurl},</if>
+            <if test="personurl != null">#{personurl},</if>
+            <if test="personfile != null">#{personfile},</if>
+            <if test="makers != null">#{makers},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLiangzaiinfo" parameterType="Liangzaiinfo">
+        update liangzaiinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="logourl != null">logourl = #{logourl},</if>
+            <if test="bkgurl != null">bkgurl = #{bkgurl},</if>
+            <if test="personurl != null">personurl = #{personurl},</if>
+            <if test="personfile != null">personfile = #{personfile},</if>
+            <if test="makers != null">makers = #{makers},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLiangzaiinfoById" parameterType="Long">
+        delete from liangzaiinfo where id = #{id}
+    </delete>
+
+    <delete id="deleteLiangzaiinfoByIds" parameterType="String">
+        delete from liangzaiinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

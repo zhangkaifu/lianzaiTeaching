@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title th:text="${liangzaiinfo.title}"></title>
+    <link rel="shortcut icon" th:href="${liangzaiinfo.logourl}">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div style="width: 100%">
+    <div style="background-color: #C70000;height: 90px;width: 100%">
+    <nav class="navbar navbar-default" role="navigation" >
+        <div class="container-fluid">
+            <div class="navbar-header" style="float: left;margin-left: 10px;width: 73px">
+                <a class="navbar-brand"  href="/"><img src="../static/frontimg/Logo.png" width="60px" high="60px" th:src="${liangzaiinfo.logourl}" alt=""></a>
+
+            </div>
+            <div style="float: left;margin-top: 13px;margin-left:40px;color: white">
+                <a href="/" ><h1 style="color: white;font-size: medium">[[${liangzaiinfo.title}]]</h1></a>
+            </div>
+            <div style="float: right;margin-right: 10px">
+                <a class="navbar-brand"   th:href="${liangzaiinfo.personfile}"><img  src="../static/frontimg/profile.png" style="margin-top: 10px" width="50px" high="50px" th:src="${liangzaiinfo.personurl}" alt="关于"></a>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <div >
+        <img src="../static/frontimg/frontback.png" th:src="${liangzaiinfo.bkgurl}" width="100%" >
+    </div>
+    <div style="margin-left: 5%;">
+        <h1 style="font-size: medium">教程</h1>
+        <div th:each="cs:${course}">
+            <div class="col-sm-2" style="margin-right: 3%;margin-top: 5px">
+                <a th:href="@{'/qianduan/info/'+${cs.id}}"><img class="img-rounded"  width="100%" height="140px" th:src="${cs.imgUrl}" alt="">
+                <p class="text-center" >[[${cs.grade}]]-[[${cs.label}]]-[[${cs.chapter}]]-[[${cs.section}]]</p>
+                <p class="text-center" > [[${cs.courses}]]</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="pull-center text-center" style="margin-right: 10px;padding: 30px">
+        第<span id="pagingText" style="color: #0d8ddb;" th:text="${Construct}"></span>页，共<span id="total"></span>页
+        <div id="pagingDiv"></div>
+    </div>
+</div>
+<hr>
+<br>
+<div style="width: 100%;position:fixed;z-index: 9999;bottom: 0px;left: 0px;right: 0px">
+    <div class="pull-right" style="margin-right: 10px">© 2020 [[${liangzaiinfo.makers}]] Copyright </div>
+</div>
+<script th:inline="javascript">
+    //首先获取当前的总页数，一般是后台传递过来的，这里假定40页。
+    var total = Math.ceil([[${course.total}]]/[[${sizes}]]);
+    document.getElementById("total").innerHTML= total;
+    //id="pagingDiv"的div通过pagingConstruct函数构造，比如加载网页是第1页的
+    var Construct = [[${Construct}]];
+    pagingConstruct(Construct);
+    //形式参数paging是指当前页
+    function pagingConstruct(paging){
+        //先更新一下行内文本
+        // document.getElementById("pagingText").innerHTML = paging;
+        var pagingDivInnerHTML = "<ul class='pagination'>";
+        //这里是加载省略号的flag
+        var isHiddenExist = 0;
+        //从第1页读到第40页。
+        for (var i = 1; i <= total; i++) {
+            //如果读到当前页，就仅仅加载一个文本，不放链接
+            if (i == paging) {
+                pagingDivInnerHTML += "<li class='active'><a >"+i+"</a></li>";
+            }
+            else {
+                //如果是页首，中间页，页尾，当前页的前后三页则不省略。<li><a href="#">3</a></li>
+                if (i < 4 || i < (paging + 3) && i > (paging - 3) || i > (total / 2 - 2) && i < (total / 2 + 2) || i > (total - 3)) {
+                    pagingDivInnerHTML += "<li><a href='/home/"+i+"/10' onclick='pagingConstruct(" + i + ")'>" + i + "</a></li>";
+                    isHiddenExist = 0;
+                }
+                //否则就构造...
+                else {
+                    if (isHiddenExist == 0) {
+                        pagingDivInnerHTML += "...";
+                        isHiddenExist = 1;
+                    }
+                }
+            }
+        }
+        //把构造的内容放上去pagingDiv
+        document.getElementById("pagingDiv").innerHTML = pagingDivInnerHTML+"</ul>";
+    }
+</script>
+</body>
+</html>

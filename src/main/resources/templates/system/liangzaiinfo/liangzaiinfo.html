@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('网站信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:liangzaiinfo:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:liangzaiinfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:liangzaiinfo:remove')}]];
+        var prefix = ctx + "system/liangzaiinfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "网站信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'title',
+                    title: '网名'
+                },
+                {
+                    // field: 'logourl',
+                    title: 'logo',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<img  src="'+ctx.slice(1,-2)+row.logourl+' "  class="img-responsive img-rounded" onclick="BigBig(this.src);" data-target="#myModal" data-toggle="modal" alt="">');
+                        return actions.join('');
+                    }
+                },
+                {
+                    // field: 'bkgurl',
+                    title: '背景图',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<img  src="'+ctx.slice(1,-2)+row.bkgurl+' "  class="img-responsive img-rounded" onclick="BigBig(this.src);" data-target="#myModal" data-toggle="modal" alt="">');
+                        return actions.join('');
+                    }
+                },
+                {
+                    // field: 'personurl',
+                    title: '个人简历图标',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<img  src="'+ctx.slice(1,-2)+row.personurl+' "  class="img-responsive img-rounded" onclick="BigBig(this.src);" data-target="#myModal" data-toggle="modal" alt="">');
+                        return actions.join('');
+                    }
+                },
+                {
+                    // field: 'personfile',
+                    title: '个人简历文件',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a  href="'+ctx.slice(1,-2)+row.personurl+' " >个人简历</a>');
+                        return actions.join('');
+                    }
+                },
+                {
+                    field: 'makers',
+                    title: '版权归属'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
