@@ -9,7 +9,7 @@
 
 #### 前台
 
-![](imgs/home.png)
+![](https://github.com/zhangkaifu/lianzaiTeaching/blob/master/imgs/home.png)
 
 #### 详情
 
