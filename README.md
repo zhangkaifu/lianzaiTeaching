@@ -1,4 +1,5 @@
 # 个人视频网站
+演示地址：http://182.92.219.12/
 教学视频播放网站，前后台不分离，感谢诺依手脚架开发者的共享，此系统在若依的基础上进行二次开发。
 
 ## 效果
@@ -9,7 +10,7 @@
 
 #### 前台
 
-![](https://github.com/zhangkaifu/lianzaiTeaching/blob/master/imgs/home.png)
+![]imgs/home.png)
 
 #### 详情
 
