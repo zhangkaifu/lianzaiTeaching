@@ -12,7 +12,7 @@
 
 #### 前台
 
-![](imgs/home.png)
+![](https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png)
 
 #### 详情
 
